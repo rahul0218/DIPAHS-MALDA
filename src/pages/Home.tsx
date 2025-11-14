@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AnimatedPage from '../components/AnimatedPage';
 import { motion } from 'framer-motion';
 import { ArrowRight, School, FlaskConical, Users, Award } from 'lucide-react';
@@ -22,7 +22,7 @@ const courses = [
   {
     title: "Master of Physiotherapy Therapy (Orthopaedics)",
     description: "Advanced studies in physiotherapy with a specialization in orthopedic conditions.",
-     imgSrc: "/image/course/physical-therapy-rehabilitation-physiotherapy-7321056.png"
+    imgSrc: "/image/course/physical-therapy-rehabilitation-physiotherapy-7321056.png"
   },
   {
     title: "B.Sc in Operation Theatre Technology",
@@ -57,32 +57,54 @@ const features = [
     title: "Placement Assistance",
     description: "Dedicated support to kickstart your professional career."
   }
-]
+];
+
+const slideImages = [
+  {
+    imageSrc: "/image/hero/image (1).png",
+    alt: "Healthcare professional 1",
+    title: "Shape Your Future in Healthcare",
+    description: "Join us to gain the skills and knowledge needed for a successful career in the paramedical and allied health sciences."
+  },
+  {
+    imageSrc: "/image/hero/image.png",
+    alt: "Healthcare professional 2",
+    title: "Learning Begins With Us",
+    description: "We, at Dishari Institute Of Paramedical Allied Health Science offer supportive and inspirational environments for young enquiring minds to learn and grow with us."
+  }
+];
 
 const Home: React.FC = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slideImages.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <AnimatedPage>
-      {/* Hero Section */}
       <section className="relative h-[720px] flex items-center justify-center text-center text-white">
-        <div className="absolute inset-0 bg-black">
-          <img 
-            src="https://img-wrapper.vercel.app/image?url=https://s3-alpha-sig.figma.com/img/b2a0/3768/8112576e3a8a363a12e49a27a76e55a8?Expires=1763942400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=IuGMJrTuYBxEX7ugR6LR0zTaVJ0EwB8ooANqBU~SWPD6UVIcbIZmKxfWXp8YBwre~9Jnu0rvQdTz1BwO2DAPMfZotK6Mc2gRuQANFxsnrVaI~91TCOJiGS5yUBl5z6DprhUzNI32~j9O9bcXiJ5t5l2-3ZapEBA~x-vp6opgRQMcZhEVRHZ0fztHcejHN6tuVjg2vLIpX6dwTe5yBfByjZ5qVoKA-HsbDqY1xxRmoxgdhaNBcqkoPE0MPkWDV5dwPQucLh8pFs16h9vQb9HM1LiQ6PzNt33CgNmglh5donECLeQ4j-WnMer9RFktfBV7HWLv58iDSEoJb2TXEd79vA__" 
-            alt="Healthcare professional" 
+        <div className="absolute inset-0">
+          <img
+            src={slideImages[currentSlide].imageSrc}
+            alt={slideImages[currentSlide].alt}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/60"></div>
         </div>
-        <motion.div 
+        <motion.div
           className="relative z-10 px-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h1 className="text-4xl md:text-6xl font-bold font-lexend tracking-tighter mb-4">Shape Your Future in Healthcare</h1>
-          <p className="max-w-3xl mx-auto text-lg md:text-xl text-white-tertiary mb-8">
-            Join us to gain the skills and knowledge needed for a successful career in the paramedical and allied health sciences.
-          </p>
-          <a href="#" className="bg-primary-blue text-white font-lexend text-base font-medium py-3 px-6 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105">
+          <h1 className="text-4xl md:text-6xl font-bold font-lexend tracking-tighter mb-4">{slideImages[currentSlide].title}</h1>
+          <p className="max-w-3xl mx-auto text-lg md:text-xl text-white-tertiary mb-8">{slideImages[currentSlide].description}</p>
+          <a href="/contact" className="bg-primary-blue text-white font-lexend text-base font-medium py-3 px-6 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105">
             Explore Courses
           </a>
         </motion.div>
@@ -123,11 +145,11 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Learning Begins Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-6 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-text-primary font-lexend tracking-tighter mb-2">Learning Begins With Us</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-text-primary font-lexend tracking-tight mb-2">Learning Begins With Us</h2>
             <p className="text-lg text-text-secondary">We, at Dishari Institute Of Paramedical Allied Health Science offer supportive and inspirational environments for young enquiring minds to learn and grow with us. Our passion for learning means we achieve more than outstanding results. We strive to build confident and creative thinkers and aim at delivering an education that is truly relevant to their future.</p>
         </div>
       </section>
